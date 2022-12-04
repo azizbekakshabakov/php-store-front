@@ -10,6 +10,13 @@ import { Category } from './component/page/item/category';
 import { CategoryEdit } from './component/page/item/category-edit';
 import { Goods } from './component/page/all-items/goods';
 import { Good } from './component/page/item/good';
+import { GoodEdit } from './component/page/item/good-edit';
+import { Sales } from './component/page/all-items/sales';
+import { Sale } from './component/page/item/sale';
+import { SaleEdit } from './component/page/item/sale-edit';
+import { Suppliers } from './component/page/all-items/suppliers';
+import { Supplier } from './component/page/item/supplier';
+import { SupplierEdit } from './component/page/item/supplier-edit';
 
 function App() {
 
@@ -31,11 +38,11 @@ function App() {
           </Route>
 
           <Route path="/goods" element={<Goods/>}>
-            {/* <Route path=":id" element={<GoodEdit />} />*/}
+            <Route path=":id" element={<GoodEdit />} />
             <Route path="new" element={<Good />} /> 
           </Route>
 
-          {/* <Route path="/sales" element={<Sales/>}>
+          <Route path="/sales" element={<Sales/>}>
             <Route path=":id" element={<SaleEdit />} />
             <Route path="new" element={<Sale />} />
           </Route>
@@ -45,7 +52,7 @@ function App() {
             <Route path="new" element={<Supplier />} />
           </Route>
 
-          <Route path="/warehouses" element={<Warehouses/>}>
+          {/* <Route path="/warehouses" element={<Warehouses/>}>
             <Route path=":id" element={<WarehouseEdit />} />
             <Route path="new" element={<Warehouse />} />
           </Route> */}

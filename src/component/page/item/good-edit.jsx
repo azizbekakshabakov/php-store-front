@@ -13,15 +13,20 @@ export const GoodEdit = () => {
     const id = useParams().id;
 
     const [name, setName] = useState('');
-    const [employee_id, setEmployee_id] = useState('');
+    const [quantity, setQuantity] = useState('');
+    const [category_id, setCategory_id] = useState('');
+    const [supplier_id, setSupplier_id] = useState('');
+    const [warehouse_id, setWarehouse_id] = useState('');
 
     //get dependent cols
-    const [employees, setEmployees] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [suppliers, setSuppliers] = useState([]);
+    const [warehouses, setWarehouses] = useState([]);
     useEffect(() => {
         const getAllItems = () => {
             axios
                 .get(
-                    `http://127.0.0.1:8000/api/employees`,
+                    `http://127.0.0.1:8000/api/categories`,
                     {
                         headers: {
                             'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -29,7 +34,39 @@ export const GoodEdit = () => {
                     }
                 )
                 .then((res) => {
-                    setEmployees(res.data.items);
+                    setCategories(res.data.items);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+
+            axios
+                .get(
+                    `http://127.0.0.1:8000/api/suppliers`,
+                    {
+                        headers: {
+                            'Authorization': `Bearer ${localStorage.getItem('token')}`
+                        }
+                    }
+                )
+                .then((res) => {
+                    setSuppliers(res.data.items);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+
+            axios
+                .get(
+                    `http://127.0.0.1:8000/api/warehouses`,
+                    {
+                        headers: {
+                            'Authorization': `Bearer ${localStorage.getItem('token')}`
+                        }
+                    }
+                )
+                .then((res) => {
+                    setWarehouses(res.data.items);
                 })
                 .catch((err) => {
                     console.log(err);
@@ -53,7 +90,10 @@ export const GoodEdit = () => {
                 )
                 .then((res) => {
                     setName(res.data.data.name);
-                    setEmployee_id(res.data.data.employee.id);
+                    setQuantity(res.data.data.quantity);
+                    setCategory_id(res.data.data.category.id);
+                    setSupplier_id(res.data.data.supplier.id);
+                    setWarehouse_id(res.data.data.warehouse.id);
                 })
                 .catch((err) => {
                     console.log(err);
@@ -69,7 +109,7 @@ export const GoodEdit = () => {
             .post(
                 `http://127.0.0.1:8000/api/goods`,
                 {
-                    id, name, employee_id, _method: 'put'
+                    id, name, quantity, category_id, supplier_id, warehouse_id, _method: 'put'
                 },
                 {
                     headers: {
@@ -92,21 +132,58 @@ export const GoodEdit = () => {
         <Container align="center" maxWidth="sm">
             <List>
                 <ListItem>
-                    <TextField sx={{width:"100%;"}} value={name} id="outlined-basic" label="First name" variant="outlined" onChange={(event) => setName(event.target.value)} />
+                    <TextField sx={{width:"100%;"}} value={name} id="outlined-basic" label="Name" variant="outlined" onChange={(event) => setName(event.target.value)} />
+                </ListItem>
+                <ListItem>
+                    <TextField sx={{width:"100%;"}} value={quantity} id="outlined-basic" label="Quantity" variant="outlined" onChange={(event) => setQuantity(event.target.value)} inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }} />
                 </ListItem>
                 <ListItem>
                     <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-label">Employee</InputLabel>
+                        <InputLabel id="demo-simple-select-label">Category</InputLabel>
                         <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            defaultValue={employee_id}
-                            value={employee_id}
-                            label="Employee"
-                            onChange={(event) => setEmployee_id(event.target.value)}
+                            defaultValue={category_id}
+                            value={category_id}
+                            label="Category"
+                            onChange={(event) => setCategory_id(event.target.value)}
                         >
-                            {employees.map((employee) => (
-                                <MenuItem key={employee.id} value={employee.id}>{`${employee.name} ${employee.surname}`}</MenuItem>
+                            {categories.map((category) => (
+                                <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                </ListItem>
+                <ListItem>
+                    <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label">Supplier</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            defaultValue={supplier_id}
+                            value={supplier_id}
+                            label="Supplier"
+                            onChange={(event) => setSupplier_id(event.target.value)}
+                        >
+                            {suppliers.map((supplier) => (
+                                <MenuItem key={supplier.id} value={supplier.id}>{supplier.name}</MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                </ListItem>
+                <ListItem>
+                    <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label">Warehouse</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            defaultValue={warehouse_id}
+                            value={warehouse_id}
+                            label="Warehouse"
+                            onChange={(event) => setWarehouse_id(event.target.value)}
+                        >
+                            {warehouses.map((warehouse) => (
+                                <MenuItem key={warehouse.id} value={warehouse.id}>{warehouse.index}</MenuItem>
                             ))}
                         </Select>
                     </FormControl>
