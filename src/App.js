@@ -17,6 +17,9 @@ import { SaleEdit } from './component/page/item/sale-edit';
 import { Suppliers } from './component/page/all-items/suppliers';
 import { Supplier } from './component/page/item/supplier';
 import { SupplierEdit } from './component/page/item/supplier-edit';
+import { Warehouses } from './component/page/all-items/warehouses';
+import { WarehouseEdit } from './component/page/item/warehouse-edit';
+import { Warehouse } from './component/page/item/warehouse';
 
 function App() {
 
@@ -52,10 +55,10 @@ function App() {
             <Route path="new" element={<Supplier />} />
           </Route>
 
-          {/* <Route path="/warehouses" element={<Warehouses/>}>
+          <Route path="/warehouses" element={<Warehouses/>}>
             <Route path=":id" element={<WarehouseEdit />} />
             <Route path="new" element={<Warehouse />} />
-          </Route> */}
+          </Route>
 
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
@@ -65,10 +68,6 @@ function App() {
       
     </>
   );
-
-  return (
-    <></>
-  )
 }
 
 export default App;
